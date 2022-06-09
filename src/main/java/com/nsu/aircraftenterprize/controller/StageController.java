@@ -1,6 +1,5 @@
 package com.nsu.aircraftenterprize.controller;
 
-import com.nsu.aircraftenterprize.model.ProductModel;
 import com.nsu.aircraftenterprize.model.StageModel;
 import com.nsu.aircraftenterprize.rest.StageRequestDTO;
 import com.nsu.aircraftenterprize.service.StageService;
@@ -34,6 +33,15 @@ public class StageController {
             System.out.println(request);
             stageService.addStage(request);
             return ResponseEntity.ok("Stage added");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+    @DeleteMapping
+    public ResponseEntity<?> deleteStage(@RequestBody Long id) {
+        try {
+            stageService.deleteStage(id);
+            return ResponseEntity.ok("Stage deleted");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

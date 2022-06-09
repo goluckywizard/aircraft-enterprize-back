@@ -31,7 +31,7 @@ public class ProductTypeController {
         }
     }
     @GetMapping
-    public ResponseEntity<?> getProductCategories() {
+    public ResponseEntity<?> getProductTypes() {
         try {
             List<ProductTypeModel> productTypeModels = new ArrayList<>();
             productTypeService.getAllProductTypes().forEach(productType -> productTypeModels.add(ProductTypeModel.toModel(productType)));
@@ -41,11 +41,20 @@ public class ProductTypeController {
         }
     }
     @GetMapping("/{category_id}")
-    public ResponseEntity<?> getEngineersByCategory(@PathVariable Long category_id) {
+    public ResponseEntity<?> getTypesByCategory(@PathVariable Long category_id) {
         try {
             List<ProductTypeModel> productTypeModels = new ArrayList<>();
             productTypeService.getProductTypesByCategory(category_id).forEach(productType -> productTypeModels.add(ProductTypeModel.toModel(productType)));
             return ResponseEntity.ok(productTypeModels);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+    @DeleteMapping
+    public ResponseEntity<?> deleteType(@RequestBody Long typeId) {
+        try {
+            productTypeService.deleteType(typeId);
+            return ResponseEntity.ok("Product type deleted");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

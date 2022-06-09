@@ -24,4 +24,7 @@ public class TestFieldService {
     public TestField getTestFieldById(Long id) {
         return fieldRepository.findById(id).get();
     }
+    public void deleteField(Long id) {
+        fieldRepository.deleteById(id);
+    }
 }

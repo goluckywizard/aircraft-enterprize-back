@@ -38,4 +38,13 @@ public class EmployeeCategoryController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+    @DeleteMapping
+    public ResponseEntity<?> deleteCategory(@RequestBody Long categoryId) {
+        try {
+            employeeCategoryService.deleteCategory(categoryId);
+            return ResponseEntity.ok("Category deleted");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }

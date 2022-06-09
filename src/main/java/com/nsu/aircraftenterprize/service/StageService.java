@@ -23,5 +23,8 @@ public class StageService {
 
         stageRepository.save(stage);
     }
+    public void deleteStage(Long stageId) {
+        stageRepository.deleteById(stageId);
+    }
 
 }

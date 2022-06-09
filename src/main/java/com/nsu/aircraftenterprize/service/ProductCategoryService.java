@@ -24,4 +24,8 @@ public class ProductCategoryService {
         productCategory.setName(request.getName());
         productCategoryRepository.save(productCategory);
     }
+
+    public void deleteCategory(Long categoryId) {
+        productCategoryRepository.deleteById(categoryId);
+    }
 }

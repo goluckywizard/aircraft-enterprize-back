@@ -33,4 +33,7 @@ public class TestEquipmentService {
         TestField field = fieldRepository.findById(field_id).get();
         return equipmentRepository.findByTestField(field);
     }
+    public void deleteEquipment(Long id) {
+        equipmentRepository.deleteById(id);
+    }
 }

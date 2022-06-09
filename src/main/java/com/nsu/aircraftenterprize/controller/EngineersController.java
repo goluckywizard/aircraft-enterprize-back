@@ -51,4 +51,13 @@ public class EngineersController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+    @DeleteMapping
+    public ResponseEntity<?> deleteEngineer(@RequestBody Long engineerId) {
+        try {
+            engineerService.deleteEngineer(engineerId);
+            return ResponseEntity.ok("Engineer deleted");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }

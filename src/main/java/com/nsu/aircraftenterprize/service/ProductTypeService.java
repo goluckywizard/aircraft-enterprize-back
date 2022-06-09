@@ -34,4 +34,7 @@ public class ProductTypeService {
         ProductCategory category = productCategoryRepository.findById(category_id).get();
         return productTypeRepository.findByProductCategory(category);
     }
+    public void deleteType(Long typeId) {
+        productTypeRepository.deleteById(typeId);
+    }
 }

@@ -38,4 +38,13 @@ public class WorkerController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+    @DeleteMapping
+    public ResponseEntity<?> deleteWorker(@RequestBody Long id) {
+        try {
+            workerService.deleteWorker(id);
+            return ResponseEntity.ok("Worker deleted");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }

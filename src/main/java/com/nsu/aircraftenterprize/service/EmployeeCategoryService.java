@@ -21,4 +21,7 @@ public class EmployeeCategoryService {
         employeeCategory.setName(dto.getName());
         employeeCategoryRepository.save(employeeCategory);
     }
+    public void deleteCategory(Long categoryId) {
+        employeeCategoryRepository.deleteById(categoryId);
+    }
 }

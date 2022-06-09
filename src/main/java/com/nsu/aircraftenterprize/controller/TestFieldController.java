@@ -38,4 +38,13 @@ public class TestFieldController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+    @DeleteMapping
+    public ResponseEntity<?> deleteField(@RequestBody Long id) {
+        try {
+            fieldService.deleteField(id);
+            return ResponseEntity.ok("Test field deleted");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }

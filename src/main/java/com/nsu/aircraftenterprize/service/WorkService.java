@@ -56,4 +56,7 @@ public class WorkService {
         Product product = productRepository.findById(productId).get();
         work.getProducts().add(product);
     }
+    public void deleteWork(Long workId) {
+        workRepository.deleteById(workId);
+    }
 }

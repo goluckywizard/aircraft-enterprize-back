@@ -13,7 +13,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -30,6 +32,8 @@ public class ProductService {
 
         Product product = new Product();
         product.setProductType(type);
+        Date date = new Date();
+        product.setCreateTime(new Timestamp(date.getTime()));
 
         productRepository.save(product);
     }

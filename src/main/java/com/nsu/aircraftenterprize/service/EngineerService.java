@@ -40,7 +40,6 @@ public class EngineerService {
         return engineerRepository.findByEmployeeCategory(category);
     }
     public void deleteEngineer(Long id) {
-        Engineer engineer = engineerRepository.findById(id).get();
-        engineerRepository.delete(engineer);
+        engineerRepository.deleteById(id);
     }
 }

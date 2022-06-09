@@ -37,4 +37,13 @@ public class TestEquipmentController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+    @DeleteMapping
+    public ResponseEntity<?> deleteField(@RequestBody Long id) {
+        try {
+            equipmentService.deleteEquipment(id);
+            return ResponseEntity.ok("Test equipment deleted");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }

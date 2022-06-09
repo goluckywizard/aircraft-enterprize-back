@@ -3,6 +3,7 @@ package com.nsu.aircraftenterprize.service;
 import com.nsu.aircraftenterprize.entity.*;
 import com.nsu.aircraftenterprize.repository.ProductAttributeRepository;
 import com.nsu.aircraftenterprize.repository.ProductCategoryRepository;
+import com.nsu.aircraftenterprize.rest.AttributeDELETERequestDTO;
 import com.nsu.aircraftenterprize.rest.EmployeeAttributeRequestDTO;
 import com.nsu.aircraftenterprize.rest.ProductAttributeRequestDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,5 +33,10 @@ public class ProductAttributeService {
         productAttribute.setValue(request.getValue());
 
         attributeRepository.save(productAttribute);
+    }
+    public void deleteAttribute(AttributeDELETERequestDTO request) {
+        ProductCategory category = categoryRepository.findById(request.getCategoryId()).get();
+        ProductAttribute attribute = attributeRepository.findByProductCategoryAndAttribute(category, request.getAttribute());
+        attributeRepository.delete(attribute);
     }
 }

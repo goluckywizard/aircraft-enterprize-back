@@ -9,4 +9,5 @@ import java.util.List;
 public interface EmployeeAttributeRepository extends CrudRepository<EmployeeAttribute, Long> {
     EmployeeAttribute findByAttribute(String attribute);
     List<EmployeeAttribute> findAllByEmployeeCategory(EmployeeCategory employeeCategory);
+    EmployeeAttribute findByEmployeeCategoryAndAttribute(EmployeeCategory employeeCategory, String attribute);
 }

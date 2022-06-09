@@ -2,6 +2,7 @@ package com.nsu.aircraftenterprize.controller;
 
 import com.nsu.aircraftenterprize.model.DepartmentModel;
 import com.nsu.aircraftenterprize.model.EmployeeAttributeModel;
+import com.nsu.aircraftenterprize.rest.AttributeDELETERequestDTO;
 import com.nsu.aircraftenterprize.rest.DepartmentRequestDTO;
 import com.nsu.aircraftenterprize.rest.EmployeeAttributeGETRequestDTO;
 import com.nsu.aircraftenterprize.rest.EmployeeAttributeRequestDTO;
@@ -38,6 +39,15 @@ public class EmployeeAttributeController {
             return ResponseEntity.ok("Employee attribute added");
         }
         catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+    @DeleteMapping
+    public ResponseEntity<?> deleteAttribute(@RequestBody AttributeDELETERequestDTO request) {
+        try {
+            service.deleteAttribute(request);
+            return ResponseEntity.ok("Attribute deleted");
+        } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

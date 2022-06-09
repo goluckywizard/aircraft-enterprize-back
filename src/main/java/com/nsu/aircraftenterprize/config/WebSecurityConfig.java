@@ -21,6 +21,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.Collections;
 
 @Configuration
 @EnableWebSecurity
@@ -69,31 +70,30 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").permitAll()
                 .antMatchers("/registration").not().fullyAuthenticated()
                 .antMatchers("/auth/login").permitAll()
-                .antMatchers("/manufacture").hasRole("USER")
-                .antMatchers("/department").permitAll()
+                .antMatchers("/manufacture").fullyAuthenticated()
+                .antMatchers("/department").fullyAuthenticated()
                 //.antMatchers("/department").hasAnyRole()
-                .antMatchers("/employee-category").permitAll()
-                .antMatchers("/employee-attribute").permitAll()
-                .antMatchers("/employee-attribute/{category_id}").permitAll()
-                .antMatchers("/product-category").permitAll()
-                .antMatchers("/product-attribute").permitAll()
-                .antMatchers("/product-attribute/{category_id}").permitAll()
-                .antMatchers("/engineer").permitAll()
-                .antMatchers("/engineer/{category_id}").permitAll()
-                .antMatchers("/product-type").permitAll()
-                .antMatchers("/product-type/{category_id}").permitAll()
-                .antMatchers("/worker").permitAll()
-                .antMatchers("/stage").permitAll()
-                .antMatchers("/brigade").permitAll()
-                .antMatchers("/product").permitAll()
-                .antMatchers("/product/type/{type_id}").permitAll()
-                .antMatchers("/product/type/{type_id}/{page}/{count}").permitAll()
-                .antMatchers("/product/category/{category_id}").permitAll()
-                .antMatchers("/testfield").permitAll()
-                .antMatchers("/test-equipment").permitAll()
-                .antMatchers("/work").permitAll()
-                .anyRequest()
-                .authenticated()
+                .antMatchers("/employee-category").fullyAuthenticated()
+                .antMatchers("/employee-attribute").fullyAuthenticated()
+                .antMatchers("/employee-attribute/{category_id}").fullyAuthenticated()
+                .antMatchers("/product-category").fullyAuthenticated()
+                .antMatchers("/product-attribute").fullyAuthenticated()
+                .antMatchers("/product-attribute/{category_id}").fullyAuthenticated()
+                .antMatchers("/engineer").fullyAuthenticated()
+                .antMatchers("/engineer/{category_id}").fullyAuthenticated()
+                .antMatchers("/product-type").fullyAuthenticated()
+                .antMatchers("/product-type/{category_id}").fullyAuthenticated()
+                .antMatchers("/worker").fullyAuthenticated()
+                .antMatchers("/stage").fullyAuthenticated()
+                .antMatchers("/brigade").fullyAuthenticated()
+                .antMatchers("/product").fullyAuthenticated()
+                .antMatchers("/product/type/{type_id}").fullyAuthenticated()
+                .antMatchers("/product/type/{type_id}/{page}/{count}").fullyAuthenticated()
+                .antMatchers("/product/category/{category_id}").fullyAuthenticated()
+                .antMatchers("/testfield").fullyAuthenticated()
+                .antMatchers("/test-equipment").fullyAuthenticated()
+                .antMatchers("/work").fullyAuthenticated()
+                .anyRequest().authenticated()
                 .and()
                 .apply(jwtConfigurer);
 
@@ -105,7 +105,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.addAllowedOrigin("*");
+        config.setAllowedOriginPatterns(Collections.singletonList("*"));
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
         source.registerCorsConfiguration("/**", config);
