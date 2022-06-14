@@ -60,6 +60,11 @@ public class ProductService {
 
         return productRepository.findAllByProductType(type, pageable);
     }
+    public Page<Product> getAllProductsOnPages(Long page, Long offset) {
+        Pageable pageable = PageRequest.of(page.intValue(), offset.intValue());
+
+        return productRepository.findAll(pageable);
+    }
     public void deleteProduct(Long productId) {
         Product product = productRepository.findById(productId).get();
         productRepository.delete(product);

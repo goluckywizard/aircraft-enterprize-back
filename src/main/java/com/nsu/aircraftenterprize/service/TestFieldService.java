@@ -3,6 +3,7 @@ package com.nsu.aircraftenterprize.service;
 import com.nsu.aircraftenterprize.entity.TestField;
 import com.nsu.aircraftenterprize.repository.TestFieldRepository;
 import com.nsu.aircraftenterprize.rest.TestFieldDTO;
+import com.nsu.aircraftenterprize.rest.update.TestFieldUpdateDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,5 +27,10 @@ public class TestFieldService {
     }
     public void deleteField(Long id) {
         fieldRepository.deleteById(id);
+    }
+    public void updateField(Long id, TestFieldUpdateDTO request) {
+        TestField testField = fieldRepository.findById(id).get();
+        testField.setName(request.getName());
+        fieldRepository.save(testField);
     }
 }

@@ -5,6 +5,7 @@ import com.nsu.aircraftenterprize.entity.Worker;
 import com.nsu.aircraftenterprize.repository.BrigadeRepository;
 import com.nsu.aircraftenterprize.repository.WorkerRepository;
 import com.nsu.aircraftenterprize.rest.BrigadeRequestDTO;
+import com.nsu.aircraftenterprize.rest.update.BrigadeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,5 +43,21 @@ public class BrigadeService {
     public void deleteBrigade(Long brigadeId) {
         Brigade brigade = brigadeRepository.findById(brigadeId).get();
         brigadeRepository.delete(brigade);
+    }
+    public void updateBrigade(BrigadeDTO request) {
+        Brigade brigade = brigadeRepository.findById(request.getId()).get();
+
+        Worker worker;
+        if (request.getHead_id() != null) {
+            worker = workerRepository.findById(request.getHead_id()).get();
+        }
+        else {
+            worker = null;
+        }
+        brigade.setHead(worker);
+        brigade.setName(request.getName());
+        brigade.setHead(worker);
+
+        brigadeRepository.save(brigade);
     }
 }

@@ -3,6 +3,7 @@ package com.nsu.aircraftenterprize.service;
 import com.nsu.aircraftenterprize.entity.Stage;
 import com.nsu.aircraftenterprize.repository.StageRepository;
 import com.nsu.aircraftenterprize.rest.StageRequestDTO;
+import com.nsu.aircraftenterprize.rest.update.StageDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,12 @@ public class StageService {
     }
     public void deleteStage(Long stageId) {
         stageRepository.deleteById(stageId);
+    }
+    public void updateStage(Long stageId, StageDTO request) {
+        Stage stage = stageRepository.findById(stageId).get();
+        stage.setName(request.getName());
+
+        stageRepository.save(stage);
     }
 
 }

@@ -3,6 +3,7 @@ package com.nsu.aircraftenterprize.controller;
 import com.nsu.aircraftenterprize.entity.Department;
 import com.nsu.aircraftenterprize.model.DepartmentModel;
 import com.nsu.aircraftenterprize.rest.DepartmentRequestDTO;
+import com.nsu.aircraftenterprize.rest.update.DepartmentDTO;
 import com.nsu.aircraftenterprize.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -47,6 +48,16 @@ public class DepartmentController {
             departmentService.deleteDepartment(departmentId);
             return ResponseEntity.ok("Department deleted");
         } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+    @PutMapping
+    public ResponseEntity<?> updateDepartment(@RequestBody DepartmentDTO request) {
+        try {
+            departmentService.updateDepartment(request.getId(), request);
+            return ResponseEntity.ok("Department updated");
+        }
+        catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

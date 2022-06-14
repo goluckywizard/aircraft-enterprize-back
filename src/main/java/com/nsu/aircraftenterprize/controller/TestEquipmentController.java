@@ -3,6 +3,7 @@ package com.nsu.aircraftenterprize.controller;
 import com.nsu.aircraftenterprize.model.TestEquipmentModel;
 import com.nsu.aircraftenterprize.model.TestFieldModel;
 import com.nsu.aircraftenterprize.rest.TestEquipmentRequestDTO;
+import com.nsu.aircraftenterprize.rest.update.EquipmentDTO;
 import com.nsu.aircraftenterprize.service.TestEquipmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -42,6 +43,15 @@ public class TestEquipmentController {
         try {
             equipmentService.deleteEquipment(id);
             return ResponseEntity.ok("Test equipment deleted");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+    @PutMapping
+    public ResponseEntity<?> updateEquipment(@RequestBody EquipmentDTO request) {
+        try {
+            equipmentService.updateEquipment(request.getId(), request);
+            return ResponseEntity.ok("Test equipment updated");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

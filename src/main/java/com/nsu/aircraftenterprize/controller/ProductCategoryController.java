@@ -4,6 +4,7 @@ import com.nsu.aircraftenterprize.model.EmployeeCategoryModel;
 import com.nsu.aircraftenterprize.model.ProductCategoryModel;
 import com.nsu.aircraftenterprize.rest.EmployeeCategoryRequestDTO;
 import com.nsu.aircraftenterprize.rest.ProductCategoryRequestDTO;
+import com.nsu.aircraftenterprize.rest.update.ProductCategoryDTO;
 import com.nsu.aircraftenterprize.service.ProductCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -47,6 +48,17 @@ public class ProductCategoryController {
             productCategoryService.deleteCategory(categoryId);
             return ResponseEntity.ok("Category deleted");
         } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping
+    public ResponseEntity<?> updateProductCategory(@RequestBody ProductCategoryDTO request) {
+        try {
+            productCategoryService.updateCategory(request.getId(), request);
+            return ResponseEntity.ok("Product category updated");
+        }
+        catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

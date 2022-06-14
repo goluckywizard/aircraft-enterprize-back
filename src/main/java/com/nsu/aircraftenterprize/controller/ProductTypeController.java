@@ -5,6 +5,7 @@ import com.nsu.aircraftenterprize.model.ProductCategoryModel;
 import com.nsu.aircraftenterprize.model.ProductTypeModel;
 import com.nsu.aircraftenterprize.rest.ProductCategoryRequestDTO;
 import com.nsu.aircraftenterprize.rest.ProductTypeRequestDTO;
+import com.nsu.aircraftenterprize.rest.update.TypeDTO;
 import com.nsu.aircraftenterprize.service.ProductTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -56,6 +57,16 @@ public class ProductTypeController {
             productTypeService.deleteType(typeId);
             return ResponseEntity.ok("Product type deleted");
         } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+    @PutMapping
+    public ResponseEntity<?> updateProductType(@RequestBody TypeDTO request) {
+        try {
+            productTypeService.updateType(request.getId(), request);
+            return ResponseEntity.ok("Product category updated");
+        }
+        catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

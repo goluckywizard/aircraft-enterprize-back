@@ -4,6 +4,7 @@ import com.nsu.aircraftenterprize.model.StageModel;
 import com.nsu.aircraftenterprize.model.TestFieldModel;
 import com.nsu.aircraftenterprize.repository.TestFieldRepository;
 import com.nsu.aircraftenterprize.rest.TestFieldDTO;
+import com.nsu.aircraftenterprize.rest.update.TestFieldUpdateDTO;
 import com.nsu.aircraftenterprize.service.TestFieldService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -43,6 +44,15 @@ public class TestFieldController {
         try {
             fieldService.deleteField(id);
             return ResponseEntity.ok("Test field deleted");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+    @PutMapping
+    public ResponseEntity<?> updateTestField(@RequestBody TestFieldUpdateDTO request) {
+        try {
+            fieldService.updateField(request.getId(), request);
+            return ResponseEntity.ok("Test field updated");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

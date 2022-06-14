@@ -4,8 +4,8 @@ import com.nsu.aircraftenterprize.model.EmployeeAttributeModel;
 import com.nsu.aircraftenterprize.model.ProductAttributesModel;
 import com.nsu.aircraftenterprize.rest.AttributeDELETERequestDTO;
 import com.nsu.aircraftenterprize.rest.EmployeeAttributeRequestDTO;
-import com.nsu.aircraftenterprize.rest.ProductAttributeGETRequestDTO;
 import com.nsu.aircraftenterprize.rest.ProductAttributeRequestDTO;
+import com.nsu.aircraftenterprize.rest.update.AttributeDTO;
 import com.nsu.aircraftenterprize.service.EmployeeAttributeService;
 import com.nsu.aircraftenterprize.service.ProductAttributeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +49,16 @@ public class ProductAttributeController {
             service.deleteAttribute(request);
             return ResponseEntity.ok("Attribute deleted");
         } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+    @PutMapping
+    public ResponseEntity<?> updateAttribute(@RequestBody AttributeDTO request) {
+        try {
+            service.updateAttribute(request);
+            return ResponseEntity.ok("Product attribute updated");
+        }
+        catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

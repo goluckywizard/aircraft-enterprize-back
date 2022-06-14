@@ -4,6 +4,7 @@ import com.nsu.aircraftenterprize.model.TestFieldModel;
 import com.nsu.aircraftenterprize.model.WorkerModel;
 import com.nsu.aircraftenterprize.rest.TestEquipmentRequestDTO;
 import com.nsu.aircraftenterprize.rest.WorkerRequestDTO;
+import com.nsu.aircraftenterprize.rest.update.WorkerDTO;
 import com.nsu.aircraftenterprize.service.WorkerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -43,6 +44,16 @@ public class WorkerController {
         try {
             workerService.deleteWorker(id);
             return ResponseEntity.ok("Worker deleted");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+    @PutMapping
+    public ResponseEntity<?> updateWorker(@RequestBody WorkerDTO request) {
+        try {
+            System.out.println(request.toString());
+            workerService.updateWorker(request.getId(), request);
+            return ResponseEntity.ok("Worker updated");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

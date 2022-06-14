@@ -4,6 +4,7 @@ package com.nsu.aircraftenterprize.service;
 import com.nsu.aircraftenterprize.entity.ProductCategory;
 import com.nsu.aircraftenterprize.repository.ProductCategoryRepository;
 import com.nsu.aircraftenterprize.rest.ProductCategoryRequestDTO;
+import com.nsu.aircraftenterprize.rest.update.ProductCategoryDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,5 +28,10 @@ public class ProductCategoryService {
 
     public void deleteCategory(Long categoryId) {
         productCategoryRepository.deleteById(categoryId);
+    }
+    public void updateCategory(Long categoryId, ProductCategoryDTO request) {
+        ProductCategory productCategory = productCategoryRepository.findById(categoryId).get();
+        productCategory.setName(request.getName());
+        productCategoryRepository.save(productCategory);
     }
 }

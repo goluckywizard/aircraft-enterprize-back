@@ -89,6 +89,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/product").fullyAuthenticated()
                 .antMatchers("/product/type/{type_id}").fullyAuthenticated()
                 .antMatchers("/product/type/{type_id}/{page}/{count}").fullyAuthenticated()
+                .antMatchers("/product/all/{page}/{count}").fullyAuthenticated()
                 .antMatchers("/product/category/{category_id}").fullyAuthenticated()
                 .antMatchers("/testfield").fullyAuthenticated()
                 .antMatchers("/test-equipment").fullyAuthenticated()

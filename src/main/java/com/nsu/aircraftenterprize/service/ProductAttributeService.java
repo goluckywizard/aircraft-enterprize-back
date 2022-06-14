@@ -6,6 +6,7 @@ import com.nsu.aircraftenterprize.repository.ProductCategoryRepository;
 import com.nsu.aircraftenterprize.rest.AttributeDELETERequestDTO;
 import com.nsu.aircraftenterprize.rest.EmployeeAttributeRequestDTO;
 import com.nsu.aircraftenterprize.rest.ProductAttributeRequestDTO;
+import com.nsu.aircraftenterprize.rest.update.AttributeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,5 +39,16 @@ public class ProductAttributeService {
         ProductCategory category = categoryRepository.findById(request.getCategoryId()).get();
         ProductAttribute attribute = attributeRepository.findByProductCategoryAndAttribute(category, request.getAttribute());
         attributeRepository.delete(attribute);
+    }
+    public void updateAttribute(AttributeDTO request) {
+        ProductCategory category = categoryRepository.findById(request.getCategory_id()).get();
+        ProductAttribute attribute = attributeRepository.findByProductCategoryAndAttribute(category, request.getAttribute());
+
+        attribute.setProductCategoryId(request.getCategory_id());
+        attribute.setAttribute(request.getAttribute());
+        attribute.setValue(request.getValue());
+        attribute.setProductCategory(category);
+
+        attributeRepository.save(attribute);
     }
 }

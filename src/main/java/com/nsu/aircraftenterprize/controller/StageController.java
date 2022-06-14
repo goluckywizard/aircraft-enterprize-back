@@ -2,6 +2,7 @@ package com.nsu.aircraftenterprize.controller;
 
 import com.nsu.aircraftenterprize.model.StageModel;
 import com.nsu.aircraftenterprize.rest.StageRequestDTO;
+import com.nsu.aircraftenterprize.rest.update.StageDTO;
 import com.nsu.aircraftenterprize.service.StageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -42,6 +43,15 @@ public class StageController {
         try {
             stageService.deleteStage(id);
             return ResponseEntity.ok("Stage deleted");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+    @PutMapping
+    public ResponseEntity<?> updateStage(@RequestBody StageDTO request) {
+        try {
+            stageService.updateStage(request.getId(), request);
+            return ResponseEntity.ok("Stage updated");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

@@ -6,6 +6,7 @@ import com.nsu.aircraftenterprize.rest.AttributeDELETERequestDTO;
 import com.nsu.aircraftenterprize.rest.DepartmentRequestDTO;
 import com.nsu.aircraftenterprize.rest.EmployeeAttributeGETRequestDTO;
 import com.nsu.aircraftenterprize.rest.EmployeeAttributeRequestDTO;
+import com.nsu.aircraftenterprize.rest.update.AttributeDTO;
 import com.nsu.aircraftenterprize.service.EmployeeAttributeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -48,6 +49,16 @@ public class EmployeeAttributeController {
             service.deleteAttribute(request);
             return ResponseEntity.ok("Attribute deleted");
         } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+    @PutMapping
+    public ResponseEntity<?> updateAttribute(@RequestBody AttributeDTO request) {
+        try {
+            service.updateAttribute(request);
+            return ResponseEntity.ok("Employee attribute updated");
+        }
+        catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

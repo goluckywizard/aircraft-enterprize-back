@@ -5,7 +5,7 @@ import com.nsu.aircraftenterprize.entity.Engineer;
 import com.nsu.aircraftenterprize.repository.EmployeeCategoryRepository;
 import com.nsu.aircraftenterprize.repository.EngineerRepository;
 import com.nsu.aircraftenterprize.rest.EngineerRequestDTO;
-import com.nsu.aircraftenterprize.rest.EngineersGETRequestByCategoryDTO;
+import com.nsu.aircraftenterprize.rest.update.EngineersDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,5 +41,16 @@ public class EngineerService {
     }
     public void deleteEngineer(Long id) {
         engineerRepository.deleteById(id);
+    }
+    public void updateEngineer(Long id, EngineersDTO request) {
+        EmployeeCategory category = categoryRepository.findById(request.getCategory_id()).get();
+
+        Engineer engineer = engineerRepository.findById(id).get();
+        engineer.setLastName(request.getLastName());
+        engineer.setFirstName(request.getFirstName());
+        engineer.setPatronymic(request.getPatronymic());
+        engineer.setEmployeeCategory(category);
+
+        engineerRepository.save(engineer);
     }
 }

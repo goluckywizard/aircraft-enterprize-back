@@ -2,7 +2,7 @@ package com.nsu.aircraftenterprize.controller;
 
 import com.nsu.aircraftenterprize.model.EngineerModel;
 import com.nsu.aircraftenterprize.rest.EngineerRequestDTO;
-import com.nsu.aircraftenterprize.rest.EngineersGETRequestByCategoryDTO;
+import com.nsu.aircraftenterprize.rest.update.EngineersDTO;
 import com.nsu.aircraftenterprize.service.EngineerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -57,6 +57,16 @@ public class EngineersController {
             engineerService.deleteEngineer(engineerId);
             return ResponseEntity.ok("Engineer deleted");
         } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+    @PutMapping
+    public ResponseEntity<?> updateEngineer(@RequestBody EngineersDTO request) {
+        try {
+            engineerService.updateEngineer(request.getId(), request);
+            return ResponseEntity.ok("Engineer added");
+        }
+        catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

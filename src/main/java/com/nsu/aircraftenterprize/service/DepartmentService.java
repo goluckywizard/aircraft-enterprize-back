@@ -5,6 +5,7 @@ import com.nsu.aircraftenterprize.model.DepartmentModel;
 import com.nsu.aircraftenterprize.repository.DepartmentRepository;
 import com.nsu.aircraftenterprize.repository.ManufactureRepository;
 import com.nsu.aircraftenterprize.rest.DepartmentRequestDTO;
+import com.nsu.aircraftenterprize.rest.update.DepartmentDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,5 +34,11 @@ public class DepartmentService {
     public void deleteDepartment(Long departmentId) {
         Department department = departmentRepository.findById(departmentId).get();
         departmentRepository.delete(department);
+    }
+    public void updateDepartment(Long id, DepartmentDTO dto) {
+        Department department = departmentRepository.findById(id).get();
+        department.setManufacture(manufactureRepository.findById(dto.getManufacture_id()).get());
+        department.setName(dto.getName());
+        departmentRepository.save(department);
     }
 }

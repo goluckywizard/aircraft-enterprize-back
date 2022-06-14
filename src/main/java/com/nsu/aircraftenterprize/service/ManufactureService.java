@@ -4,6 +4,7 @@ import com.nsu.aircraftenterprize.entity.Manufacture;
 import com.nsu.aircraftenterprize.model.ManufactureModel;
 import com.nsu.aircraftenterprize.repository.ManufactureRepository;
 import com.nsu.aircraftenterprize.rest.ManufactureRequestDTO;
+import com.nsu.aircraftenterprize.rest.update.ManufactureDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,5 +31,10 @@ public class ManufactureService {
     public void deleteManufacture(Long manufactureId) {
         Manufacture manufacture = manufactureRepository.findById(manufactureId).get();
         manufactureRepository.delete(manufacture);
+    }
+    public void updateManufacture(Long manufactureId, ManufactureDTO request) {
+        Manufacture manufacture = manufactureRepository.findById(manufactureId).get();
+        manufacture.setName(request.getName());
+        manufactureRepository.save(manufacture);
     }
 }

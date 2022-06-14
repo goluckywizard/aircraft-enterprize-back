@@ -5,6 +5,7 @@ import com.nsu.aircraftenterprize.entity.TestField;
 import com.nsu.aircraftenterprize.repository.TestEquipmentRepository;
 import com.nsu.aircraftenterprize.repository.TestFieldRepository;
 import com.nsu.aircraftenterprize.rest.TestEquipmentRequestDTO;
+import com.nsu.aircraftenterprize.rest.update.EquipmentDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,5 +36,14 @@ public class TestEquipmentService {
     }
     public void deleteEquipment(Long id) {
         equipmentRepository.deleteById(id);
+    }
+    public void updateEquipment(Long id, EquipmentDTO request) {
+        TestField testField = fieldRepository.findById(request.getTestFieldId()).get();
+
+        TestEquipment equipment = equipmentRepository.findById(id).get();
+        equipment.setName(request.getName());
+        equipment.setTestField(testField);
+
+        equipmentRepository.save(equipment);
     }
 }

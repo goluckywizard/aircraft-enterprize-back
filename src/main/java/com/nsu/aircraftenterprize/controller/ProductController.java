@@ -67,6 +67,16 @@ public class ProductController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+    @GetMapping("/all/{page}/{count}")
+    public ResponseEntity<?> getProductsPage(@PathVariable Long page, @PathVariable Long count) {
+        try {
+            List<ProductModel> productModelList = new ArrayList<>();
+            productService.getAllProductsOnPages(page, count).forEach(product -> productModelList.add(ProductModel.toModel(product)));
+            return ResponseEntity.ok(productModelList);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
     @DeleteMapping
     public ResponseEntity<?> deleteProduct(@RequestBody Long id) {
         try {

@@ -5,6 +5,7 @@ import com.nsu.aircraftenterprize.entity.ProductType;
 import com.nsu.aircraftenterprize.repository.ProductCategoryRepository;
 import com.nsu.aircraftenterprize.repository.ProductTypeRepository;
 import com.nsu.aircraftenterprize.rest.ProductTypeRequestDTO;
+import com.nsu.aircraftenterprize.rest.update.TypeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,5 +37,14 @@ public class ProductTypeService {
     }
     public void deleteType(Long typeId) {
         productTypeRepository.deleteById(typeId);
+    }
+    public void updateType(Long type_id, TypeDTO request) {
+        ProductCategory category = productCategoryRepository.findById(request.getCategory_id()).get();
+
+        ProductType type = productTypeRepository.findById(type_id).get();
+        type.setProductCategory(category);
+        type.setName(request.getName());
+
+        productTypeRepository.save(type);
     }
 }

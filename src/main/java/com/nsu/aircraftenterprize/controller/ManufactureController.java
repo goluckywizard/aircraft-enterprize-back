@@ -2,6 +2,7 @@ package com.nsu.aircraftenterprize.controller;
 
 import com.nsu.aircraftenterprize.model.ManufactureModel;
 import com.nsu.aircraftenterprize.rest.ManufactureRequestDTO;
+import com.nsu.aircraftenterprize.rest.update.ManufactureDTO;
 import com.nsu.aircraftenterprize.service.ManufactureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -46,6 +47,16 @@ public class ManufactureController {
             manufactureService.deleteManufacture(manufactureId);
             return ResponseEntity.ok("Manufacture deleted");
         } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+    @PutMapping
+    public ResponseEntity<?> updateManufacture(@RequestBody ManufactureDTO request) {
+        try {
+            manufactureService.updateManufacture(request.getId(), request);
+            return ResponseEntity.ok("Manufacture updated");
+        }
+        catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
