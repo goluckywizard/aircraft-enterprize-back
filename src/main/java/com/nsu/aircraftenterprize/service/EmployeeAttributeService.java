@@ -24,6 +24,10 @@ public class EmployeeAttributeService {
         return attributeRepository.findAllByEmployeeCategory(category);
     }
 
+    public List<EmployeeAttribute> getAllAttributes() {
+        return (List<EmployeeAttribute>) attributeRepository.findAll();
+    }
+
     public void addAttribute(EmployeeAttributeRequestDTO request) {
         EmployeeCategory category = categoryRepository.findById(request.getCategory_id()).get();
         EmployeeAttribute employeeAttribute = new EmployeeAttribute();

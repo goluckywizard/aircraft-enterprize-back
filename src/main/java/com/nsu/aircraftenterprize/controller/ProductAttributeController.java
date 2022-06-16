@@ -33,6 +33,17 @@ public class ProductAttributeController {
         }
     }
 
+    @GetMapping
+    public ResponseEntity<?> getAllAttributes() {
+        try {
+            List<ProductAttributesModel> productAttributesModelList = new ArrayList<>();
+            service.getAllAttributes().forEach(productAttribute -> productAttributesModelList.add(ProductAttributesModel.toModel(productAttribute)));
+            return ResponseEntity.ok(productAttributesModelList);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     @PostMapping
     public ResponseEntity<?> addAttribute(@RequestBody ProductAttributeRequestDTO request) {
         try {

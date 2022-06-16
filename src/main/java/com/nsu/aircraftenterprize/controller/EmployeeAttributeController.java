@@ -32,6 +32,16 @@ public class EmployeeAttributeController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+    @GetMapping
+    public ResponseEntity<?> getAllAttributes() {
+        try {
+            List<EmployeeAttributeModel> employeeAttributeModelList = new ArrayList<>();
+            service.getAllAttributes().forEach(employeeAttribute -> employeeAttributeModelList.add(EmployeeAttributeModel.toModel(employeeAttribute)));
+            return ResponseEntity.ok(employeeAttributeModelList);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 
     @PostMapping
     public ResponseEntity<?> addAttribute(@RequestBody EmployeeAttributeRequestDTO request) {

@@ -1,7 +1,9 @@
 package com.nsu.aircraftenterprize.service;
 
+import com.nsu.aircraftenterprize.entity.PasswordResetToken;
 import com.nsu.aircraftenterprize.entity.RegisteredUser;
 import com.nsu.aircraftenterprize.entity.Role;
+import com.nsu.aircraftenterprize.repository.PasswordTokenRepository;
 import com.nsu.aircraftenterprize.repository.RegisteredUserRepository;
 import com.nsu.aircraftenterprize.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,8 @@ public class UserService implements UserDetailsService {
     RoleRepository roleRepository;
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Autowired
+    PasswordTokenRepository passwordTokenRepository;
 
     @Override
     public UserDetails loadUserByUsername(String mail) throws UsernameNotFoundException {
@@ -37,6 +41,14 @@ public class UserService implements UserDetailsService {
         }
 
         return registeredUser;
+    }
+
+    public RegisteredUser findUserByMail(String mail) {
+        RegisteredUser user = registeredUserRepository.findByMail(mail);
+        if(user == null ) {
+            throw new UsernameNotFoundException("Пользователь не найден");
+        }
+        return user;
     }
 
     public RegisteredUser findUserById(Long userId) {
@@ -72,5 +84,17 @@ public class UserService implements UserDetailsService {
     public List<RegisteredUser> usergtList(Long idMin) {
         return em.createQuery("SELECT u FROM RegisteredUser u WHERE u.registered_user_id > :paramId", RegisteredUser.class)
                 .setParameter("paramId", idMin).getResultList();
+    }
+
+    public void createPasswordResetTokenForUser(RegisteredUser user, String token) {
+        PasswordResetToken myToken = new PasswordResetToken(user, token);
+        passwordTokenRepository.save(myToken);
+    }
+    public void changeUserPassword(RegisteredUser user, String password) {
+        user.setPassword(bCryptPasswordEncoder.encode(password));
+        registeredUserRepository.save(user);
+    }
+    public PasswordResetToken getUserByPasswordResetToken(String token) {
+        return passwordTokenRepository.findByToken(token);
     }
 }

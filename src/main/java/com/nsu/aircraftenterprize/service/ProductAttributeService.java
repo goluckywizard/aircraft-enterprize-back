@@ -23,6 +23,9 @@ public class ProductAttributeService {
         ProductCategory category = categoryRepository.findById(categoryId).get();
         return attributeRepository.findAllByProductCategory(category);
     }
+    public List<ProductAttribute> getAllAttributes() {
+        return (List<ProductAttribute>) attributeRepository.findAll();
+    }
 
     public void addAttribute(ProductAttributeRequestDTO request) {
         ProductCategory category = categoryRepository.findById(request.getCategory_id()).get();

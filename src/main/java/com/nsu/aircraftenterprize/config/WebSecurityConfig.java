@@ -1,10 +1,13 @@
 package com.nsu.aircraftenterprize.config;
 
 import com.nsu.aircraftenterprize.security.JwtConfigurer;
+import com.nsu.aircraftenterprize.service.MailSender;
 import com.nsu.aircraftenterprize.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -22,6 +25,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.Collections;
+import java.util.Properties;
 
 @Configuration
 @EnableWebSecurity
@@ -43,6 +47,30 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public JavaMailSender getJavaMailSender() {
+        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+        mailSender.setHost("smtp.gmail.com");
+        mailSender.setPort(587);
+        /*mailSender.setUsername("aircraft.enterpize.nsu@gmail.com");
+        mailSender.setPassword("1qw23er4!");*/
+        mailSender.setUsername("zhiecie999@gmail.com");
+        mailSender.setPassword("fcmxexqnelazueuo");
+
+        Properties props = mailSender.getJavaMailProperties();
+        props.put("mail.transport.protocol", "smtp");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+
+        return mailSender;
+    }
+
+    @Bean
+    public MailSender mailSender() {
+        return new MailSender();
     }
 
     @Override
@@ -69,6 +97,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/registration").not().fullyAuthenticated()
+                .antMatchers("/resetPassword").not().fullyAuthenticated()
+                .antMatchers("/resetPassword/new").not().fullyAuthenticated()
                 .antMatchers("/auth/login").permitAll()
                 .antMatchers("/manufacture").fullyAuthenticated()
                 .antMatchers("/department").fullyAuthenticated()
@@ -87,13 +117,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/stage").fullyAuthenticated()
                 .antMatchers("/brigade").fullyAuthenticated()
                 .antMatchers("/product").fullyAuthenticated()
-                .antMatchers("/product/type/{type_id}").fullyAuthenticated()
-                .antMatchers("/product/type/{type_id}/{page}/{count}").fullyAuthenticated()
-                .antMatchers("/product/all/{page}/{count}").fullyAuthenticated()
-                .antMatchers("/product/category/{category_id}").fullyAuthenticated()
+                .antMatchers("/product/**").fullyAuthenticated()
                 .antMatchers("/testfield").fullyAuthenticated()
                 .antMatchers("/test-equipment").fullyAuthenticated()
                 .antMatchers("/work").fullyAuthenticated()
+                .antMatchers("/requests/**").fullyAuthenticated()
                 .anyRequest().authenticated()
                 .and()
                 .apply(jwtConfigurer);
